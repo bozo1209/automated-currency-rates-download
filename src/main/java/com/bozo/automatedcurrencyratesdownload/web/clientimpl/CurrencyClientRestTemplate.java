@@ -1,5 +1,6 @@
 package com.bozo.automatedcurrencyratesdownload.web.clientimpl;
 
+import com.bozo.automatedcurrencyratesdownload.enums.Table;
 import com.bozo.automatedcurrencyratesdownload.model.Row;
 import com.bozo.automatedcurrencyratesdownload.web.CurrencyClient;
 import org.springframework.beans.factory.annotation.Value;
@@ -15,7 +16,7 @@ public class CurrencyClientRestTemplate implements CurrencyClient {
     private String apiHost;
 
     @Value("${nbp.api.table}")
-    private String table;
+    private String tablePath;
 
     private final RestTemplate restTemplate;
 
@@ -25,10 +26,11 @@ public class CurrencyClientRestTemplate implements CurrencyClient {
                 .build();
     }
 
-    public Row[] getRows(String table, String startDate, String endDate){
+    @Override
+    public Row[] getRows(Table table, String startDate, String endDate){
         return restTemplate
                 .getForObject(
-                        apiHost + this.table,
+                        apiHost + tablePath,
                         Row[].class,
                         Map.of("table", table, "startDate", startDate, "endDate", endDate));
     }
