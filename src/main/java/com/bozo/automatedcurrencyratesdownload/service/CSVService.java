@@ -16,8 +16,8 @@ public class CSVService {
     @Value("${save.path.directory}")
     private String mainDirectory;
 
-    public void saveAsCSV(List<CSVFileLineCurrency> lines){
-        String fileName = mainDirectory + "\\myCSV.csv";
+    public void saveAsCSV(List<CSVFileLineCurrency> lines, String name){
+        String fileName = mainDirectory + "\\" + name + ".csv";
         try(Writer writer = new FileWriter(fileName)) {
             StatefulBeanToCsv<CSVFileLineCurrency> beanToCsv = new StatefulBeanToCsvBuilder<CSVFileLineCurrency>(writer)
                     .withApplyQuotesToAll(false)
